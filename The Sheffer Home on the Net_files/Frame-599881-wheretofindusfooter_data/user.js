@@ -3,14 +3,6 @@
 
 
 
-/*
-     FILE ARCHIVED ON 3:12:20 Dec 7, 2013 AND RETRIEVED FROM THE
-     INTERNET ARCHIVE ON 22:25:37 Jun 14, 2015.
-     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
-
-     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
-     SECTION 108(a)(3)).
-*/
 // ----------------------------------------------
 // This function dynamically generates flash file
 // parameters.
@@ -49,16 +41,6 @@ function viewFlash(src, w, h, loop, play)
 // -----------------------------------------------
 function viewChat(instance_id, url)
 {
-   props = 'toolbar=0,scrollbars=0,location=0,status=0,resizable=1,menubar=0,width=584,height=410';
-   win = window.open('','Chat',props);
-   win.document.writeln('<html>');
-   win.document.writeln('<head><title>Chat Room</title></head>');
-   win.document.writeln('<body>');
-   win.document.writeln('<applet codebase="'+url+'" archive="multichat.jar" CODE="GUIClient.class" width="562" height="385" align="BOTTOM">');
-   win.document.writeln('<param name="CABBASE" value="multichat.cab">');
-   win.document.writeln('<param name="roomid" value="'+instance_id+'">');
-   win.document.writeln('</applet>');
-   win.document.writeln('</body></html>');
 }
 
 //----------------------------------------------------

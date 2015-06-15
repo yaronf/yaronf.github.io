@@ -3,14 +3,6 @@
 
 
 
-/*
-     FILE ARCHIVED ON 3:13:11 Dec 7, 2013 AND RETRIEVED FROM THE
-     INTERNET ARCHIVE ON 22:25:37 Jun 14, 2015.
-     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
-
-     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
-     SECTION 108(a)(3)).
-*/
 /* 			####### Animator.js code starts here ########## */
 		/*  
 		Animator.js 1.1.9

@@ -3,14 +3,6 @@
 
 
 
-/*
-     FILE ARCHIVED ON 3:12:07 Dec 7, 2013 AND RETRIEVED FROM THE
-     INTERNET ARCHIVE ON 22:25:37 Jun 14, 2015.
-     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
-
-     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
-     SECTION 108(a)(3)).
-*/
  /* ----------PhotoAlbum css starts here -----------*/
          /** {
             padding: 0;
@@ -88,7 +80,7 @@
         z-index: 1;
         position: relative;
         background-color: #EDEDED;
-		background-image: url(/web/20131207031207/http://sheffer.org/images/photoalbum/photo_controlBG.jpg); 
+		background-image: url(http://sheffer.org/images/photoalbum/photo_controlBG.jpg);
 		text-align: center;
         }
         
@@ -96,7 +88,7 @@
             margin: 5px auto;            
             z-index: 1;
             text-align: center;
-            background-image: url(/web/20131207031207/http://sheffer.org/images/photoalbum/photo_controlBG.jpg);
+            background-image: url(http://sheffer.org/images/photoalbum/photo_controlBG.jpg);
 			background-repeat: repeat-x;
             background-color: #EDEDED;
             color: #000000;
@@ -267,7 +259,7 @@
 		}        
 				
 		.detailControls {
-			background-image: url(/web/20131207031207/http://sheffer.org/images/photoalbum/photo_controlBG.jpg); 
+			background-image: url(http://sheffer.org/images/photoalbum/photo_controlBG.jpg);
 			margin-top: 15px;
 			overflow: hidden;
 		}
