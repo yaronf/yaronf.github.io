@@ -1,0 +1,67 @@
+==================================================================
+https://keybase.io/yaronf
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of http://www.sheffer.org
+  * I am yaronf (https://keybase.io/yaronf) on keybase.
+  * I have a public key with fingerprint D172 1E45 108F 2366 F805  20C4 2E90 7C03 C434 1E2D
+
+To do so, I am signing this object:
+
+{
+    "body": {
+        "key": {
+            "fingerprint": "d1721e45108f2366f80520c42e907c03c4341e2d",
+            "host": "keybase.io",
+            "key_id": "2e907c03c4341e2d",
+            "kid": "01019b9afa2e056f7c82b79784d2829e6c1e841deb38dc95d3fa2fa769d4be7d89c80a",
+            "uid": "6cae94820cc0650b9e818f06fd4e2019",
+            "username": "yaronf"
+        },
+        "service": {
+            "hostname": "www.sheffer.org",
+            "protocol": "http:"
+        },
+        "type": "web_service_binding",
+        "version": 1
+    },
+    "ctime": 1440403167,
+    "expire_in": 157680000,
+    "prev": "36744d952aa7064a7fd4371d97d8e1a2c19fa20584de61d77a190ad334bbe0ca",
+    "seqno": 4,
+    "tag": "signature"
+}
+
+which yields the signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: Keybase OpenPGP v2.0.43
+Comment: https://keybase.io/crypto
+
+yMIeAnicbVJdSBRRFF7T1FaiHyryoczBEku2e2fuzs+iYEiUoVBIVqRtd2bu7E7q
+zDo7/mU+SEWaRhkRS4oR9ieuiEtUFpRJamREhUHYj1pSUULUQw89dUfsrftyuOd8
+33fO+TiPl8a73HGpR4+42+/sgXHjj7ZVu/ZOPp9qYGRTrWd8DUw5mQ+abgSIFbJ0
+w2Z8jAoFFhLkhUDUWI7nNRF4WaAglkhAUACnIA5BwqpMNhM0ww6Dysg4TDy6SXP0
+49dVmv0Pvny+ACCAkixhDbMEeHlNUERWFiRBRCorshLhFUhEBFUic6KqSF6Vo0gN
+C7ykIpkIqigpIsBUrnpejlcwkZBIR1QA7wWyREQoaoDXVERY2skBholl4EpC0fXY
+Mg2NacxmaK5GV4hjgLPHQr22ttYTDhJNI5bHtAKUHLJM21TMCloM2nbI53Dt+tA8
+mMj+BRm/rBsq9ZESaogV1k2D8UGKVGzd0YUIAQQ4yAvZDKkL6Rbx6w7CK/AioM9p
+Q2qoJMcLCKmSl8VYADzCAl2DE6Aq0b0JxKwCJeoG8FKzCA9VQcBQAljlOCTLBCiO
+LWFSZZiMD9ExcYBKhvWAge1qizCNw0OlCa44tytx8SLnElzuJcv/3Qd/PNk10X8w
+sXfm4uDLSIy7VHpyDMQSOjtWdP8pburKzPdldp7NLYg2bogcyI8UDAzm7cswgoUp
+Iy3lr46lW2WHW3eeeR3rw59SpucSSINesYur681Z92NydOpL07lkZqrk85qVkU5i
+ZsZfudw7XIhvb/Wdvqt3jK89VFw6dCPD3pSY3Kx9fXOr7sTE+L0HQDL5oo6cmdX8
+t9bo7pbYdXfK7PdT7uabdkl6ZXnRsgt5xW9LpckP/VlbmvI/VvWMPIycn+35uXF/
+5uizvqf9mz2/x+bSZuXOHdufJA28a4t2taetv5Y73RZIZXPeT5cpWd2FNfdjl6Oe
+q1W/gpa/ZNV0UuTFX3niJRQ=
+=ygNb
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/yaronf
+
+==================================================================
