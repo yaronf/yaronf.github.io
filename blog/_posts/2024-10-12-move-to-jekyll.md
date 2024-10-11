@@ -27,7 +27,7 @@ but you need basic Linux and Web background; otherwise, I guess [Medium](https:/
 your friend).
 
 I had an embarrassingly old personal web site hosted on GitHub Pages.
-I was able to add a sufficient (for my addmittedly low standards) blog
+I was able to add a sufficient (for my admittedly low standards) blog
 environment while keeping the old web site intact. All it took
 was a [Jekyll](https://jekyllrb.com/) web site located elsewhere
 in the repo's directory tree. And then some heavy handed copying of files
