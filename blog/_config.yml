@@ -31,7 +31,6 @@ github_username:  yaronf
 
 # Build settings
 theme: minima
-skin: dark
 # remote_theme: niklasbuschmann/contrast@v2.11
 
 plugins:
