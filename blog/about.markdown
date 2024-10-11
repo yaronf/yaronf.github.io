@@ -4,15 +4,10 @@ title: About
 permalink: /about/
 ---
 
-This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](https://jekyllrb.com/)
+I am Yaron Sheffer. This is my (rather rarely updated) blog, focusing mainly
+on security and mostly covering my work at the [IETF](www.ietf.org).
 
-You can find the source code for Minima at GitHub:
-[jekyll][jekyll-organization] /
-[minima](https://github.com/jekyll/minima)
+My slightly obscured email address is at the bottom of each page, feel free
+to drop me a note.
 
-You can find the source code for Jekyll at GitHub:
-[jekyll][jekyll-organization] /
-[jekyll](https://github.com/jekyll/jekyll)
-
-
-[jekyll-organization]: https://github.com/jekyll
+Physically, I am most likely to be in [Tel Aviv, Israel](https://maps.app.goo.gl/VX9Az81nkcLP9wZr9). But I enjoy traveling and do it often.

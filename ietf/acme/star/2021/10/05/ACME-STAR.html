@@ -6,23 +6,25 @@
 <title>Certificate Delegation with ACME and STAR Certificates | Yaron’s Blog</title>
 <meta name="generator" content="Jekyll v4.3.4" />
 <meta property="og:title" content="Certificate Delegation with ACME and STAR Certificates" />
+<meta name="author" content="Yaron Sheffer" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="In early March 2020, just as the world was bracing for the COVID-19 pandemic, my co-authors and I published RFC 8739. This new standard introduced the concept of short-term, automatically renewed (STAR) certificates into the X.509 certificate universe, and specifically to the large and vibrant ACME ecosystem. A year and a half later, we followed that with the publication of RFC 9115 which builds on the ACME and STAR foundations to enable automated, easy to manage certificate delegation." />
 <meta property="og:description" content="In early March 2020, just as the world was bracing for the COVID-19 pandemic, my co-authors and I published RFC 8739. This new standard introduced the concept of short-term, automatically renewed (STAR) certificates into the X.509 certificate universe, and specifically to the large and vibrant ACME ecosystem. A year and a half later, we followed that with the publication of RFC 9115 which builds on the ACME and STAR foundations to enable automated, easy to manage certificate delegation." />
-<link rel="canonical" href="https://www.sheffer.org/ietf/acme/star/2021/10/05/ACME-STAR.html" />
-<meta property="og:url" content="https://www.sheffer.org/ietf/acme/star/2021/10/05/ACME-STAR.html" />
+<link rel="canonical" href="https://www.sheffer.org/blog/ietf/acme/star/2021/10/05/ACME-STAR.html" />
+<meta property="og:url" content="https://www.sheffer.org/blog/ietf/acme/star/2021/10/05/ACME-STAR.html" />
 <meta property="og:site_name" content="Yaron’s Blog" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2021-10-05T11:00:18+03:00" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Certificate Delegation with ACME and STAR Certificates" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2021-10-05T11:00:18+03:00","datePublished":"2021-10-05T11:00:18+03:00","description":"In early March 2020, just as the world was bracing for the COVID-19 pandemic, my co-authors and I published RFC 8739. This new standard introduced the concept of short-term, automatically renewed (STAR) certificates into the X.509 certificate universe, and specifically to the large and vibrant ACME ecosystem. A year and a half later, we followed that with the publication of RFC 9115 which builds on the ACME and STAR foundations to enable automated, easy to manage certificate delegation.","headline":"Certificate Delegation with ACME and STAR Certificates","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.sheffer.org/ietf/acme/star/2021/10/05/ACME-STAR.html"},"url":"https://www.sheffer.org/ietf/acme/star/2021/10/05/ACME-STAR.html"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Yaron Sheffer"},"dateModified":"2021-10-05T11:00:18+03:00","datePublished":"2021-10-05T11:00:18+03:00","description":"In early March 2020, just as the world was bracing for the COVID-19 pandemic, my co-authors and I published RFC 8739. This new standard introduced the concept of short-term, automatically renewed (STAR) certificates into the X.509 certificate universe, and specifically to the large and vibrant ACME ecosystem. A year and a half later, we followed that with the publication of RFC 9115 which builds on the ACME and STAR foundations to enable automated, easy to manage certificate delegation.","headline":"Certificate Delegation with ACME and STAR Certificates","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.sheffer.org/blog/ietf/acme/star/2021/10/05/ACME-STAR.html"},"url":"https://www.sheffer.org/blog/ietf/acme/star/2021/10/05/ACME-STAR.html"}</script>
 <!-- End Jekyll SEO tag -->
-<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://www.sheffer.org/feed.xml" title="Yaron&apos;s Blog" /></head>
-<body><header class="site-header" role="banner">
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://www.sheffer.org/blog/feed.xml" title="Yaron&apos;s Blog" /></head>
+<body><header class="site-header">
 
-  <div class="wrapper"><a class="site-title" rel="author" href="/">Yaron&#39;s Blog</a><nav class="site-nav">
+  <div class="wrapper"><!-- This whole file was added for the following line, which modifies the lefthand side link in the page header. Otherwise the file is taken verbatim from the Minima theme. -->
+    <a class="site-title" rel="author" href="/blog">Yaron&#39;s Blog</a><nav class="site-nav">
         <input type="checkbox" id="nav-trigger" class="nav-trigger" />
         <label for="nav-trigger">
           <span class="menu-icon">
@@ -91,10 +93,10 @@
     <div class="footer-col-wrapper">
       <div class="footer-col footer-col-1">
         <ul class="contact-list">
-          <li class="p-name">Yaron&#39;s Blog</li><li><a class="u-email" href="mailto:yaronf.ietf [at] gmail [dot] com">yaronf.ietf [at] gmail [dot] com</a></li></ul>
+          <li class="p-name">Yaron Sheffer</li><li><a class="u-email" href="mailto:yaronf.ietf [at] gmail [dot] com">yaronf.ietf [at] gmail [dot] com</a></li></ul>
       </div>
 
-      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/yaronf"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">yaronf</span></a></li><li><a href="https://www.twitter.com/yaronsheffer"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">yaronsheffer</span></a></li></ul>
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/yaronf"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">yaronf</span></a></li><li><a href="https://www.linkedin.com/in/yaronf"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#linkedin"></use></svg> <span class="username">yaronf</span></a></li><li><a href="https://www.twitter.com/yaronsheffer"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">yaronsheffer</span></a></li></ul>
 </div>
 
       <div class="footer-col footer-col-3">
