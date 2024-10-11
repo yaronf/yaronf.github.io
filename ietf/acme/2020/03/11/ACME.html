@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Short Term Certificates in ACME: A New Alternative to Revocation | Yaron’s Blog</title>
+<meta name="generator" content="Jekyll v4.3.4" />
+<meta property="og:title" content="Short Term Certificates in ACME: A New Alternative to Revocation" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="My coauthors and I just published RFC 8739 on Short-Term, Automatically Renewable (STAR) certificates in the ACME automated certificate management protocol. This post explains what STAR certificates are, why we see them as an essential next step for the global public key infrastructure (PKI) and how they are enabled by the new ACME protocol." />
+<meta property="og:description" content="My coauthors and I just published RFC 8739 on Short-Term, Automatically Renewable (STAR) certificates in the ACME automated certificate management protocol. This post explains what STAR certificates are, why we see them as an essential next step for the global public key infrastructure (PKI) and how they are enabled by the new ACME protocol." />
+<link rel="canonical" href="https://www.sheffer.org/blog/ietf/acme/2020/03/11/ACME.html" />
+<meta property="og:url" content="https://www.sheffer.org/blog/ietf/acme/2020/03/11/ACME.html" />
+<meta property="og:site_name" content="Yaron’s Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-03-11T10:00:18+02:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Short Term Certificates in ACME: A New Alternative to Revocation" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2020-03-11T10:00:18+02:00","datePublished":"2020-03-11T10:00:18+02:00","description":"My coauthors and I just published RFC 8739 on Short-Term, Automatically Renewable (STAR) certificates in the ACME automated certificate management protocol. This post explains what STAR certificates are, why we see them as an essential next step for the global public key infrastructure (PKI) and how they are enabled by the new ACME protocol.","headline":"Short Term Certificates in ACME: A New Alternative to Revocation","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.sheffer.org/blog/ietf/acme/2020/03/11/ACME.html"},"url":"https://www.sheffer.org/blog/ietf/acme/2020/03/11/ACME.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blog/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://www.sheffer.org/blog/feed.xml" title="Yaron&apos;s Blog" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/blog/">Yaron&#39;s Blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/blog/about/">About</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Short Term Certificates in ACME: A New Alternative to Revocation</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2020-03-11T10:00:18+02:00" itemprop="datePublished">Mar 11, 2020
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>My coauthors and I just published <a href="https://www.rfc-editor.org/rfc/rfc8739.html">RFC 8739</a> on <strong>Short-Term, Automatically Renewable (STAR)</strong> certificates in the ACME <a href="https://en.wikipedia.org/wiki/Automated_Certificate_Management_Environment">automated certificate management</a> protocol. This post explains what STAR certificates are, why we see them as an essential next step for the global public key infrastructure (PKI) and how they are enabled by the new ACME protocol.</p>
+
+<p><img src="/assets/acme-protocol.png" alt="ACME–protocol-icon.png" /></p>
+
+<p>Some RFCs published by the IETF are fixes for well established technologies. This is true for my own <a href="https://tools.ietf.org/html/rfc7525">TLS Best Current Practices</a> and the more recent <a href="https://www.rfc-editor.org/rfc/rfc8725.html">JWT BCP</a>. In contrast, the STAR RFC aims to kickstart new technology that we see as essential to the new ways applications are being deployed. To see why, we need to dive into the theory – and the very different practice – of PKI.</p>
+
+<p>If you’ve only learned the theory of public key infrastructure in school, you could be forgiven for having a traditional view of the certificate lifecycle:</p>
+
+<ul>
+  <li>Certificates are issued with long validity periods, often one or two years.</li>
+  <li>Certificates are obtained manually, by going to the Certificate Authority’s (CA) web page and presenting a credit card.</li>
+  <li>Certificates are installed manually on the web server, leading to frequent cases when people forget to deploy the new certificate on time, and the server ends up “bricked”.</li>
+  <li>Revocation is through Certificate Revocation Lists (CRLs) that include all certificates that have been revoked by a certain CA.</li>
+  <li>The relying party can validate the certificate off-line, by only looking at the certificate itself, and possibly at revocation information that’s typically already stored in a local cache.</li>
+</ul>
+
+<p>Surprise! Except for the first assumption, all others on this list are no longer valid in today’s environment…</p>
+
+<ul>
+  <li>With the ACME protocol, certificates are fetched from the CA automatically, after the client proves it is authorized for the identity being asserted. Then, they are installed automatically. In fact the default frequency of certificate renewal which is 90 days means that any sane deployment is fully automated.</li>
+  <li>CRLs are rarely used because they tend to grow into unmanageable sizes. When certificates absolutely need to be distrusted, this is typically done through a <a href="https://www.futurehosting.com/blog/why-dont-browsers-use-certificate-revocation-checking/">software update</a> to browsers.</li>
+  <li>The best practice is for certificates to be issued with an <a href="https://en.wikipedia.org/wiki/Online_Certificate_Status_Protocol">OCSP</a> endpoint, and for the relying party to consult the OCSP server before deciding to trust the certificate.</li>
+</ul>
+
+<p>The STAR work aims to do away with the one remaining “old world” assumption, that of long validity periods.</p>
+
+<h2 id="the-star-certificates-lifecycle">The STAR Certificate’s Lifecycle</h2>
+
+<p>Similarly to the shift from servers to containers (the <a href="http://cloudscaling.com/blog/cloud-computing/the-history-of-pets-vs-cattle/">Pets vs. Cattle</a> analogy), STAR certificates are not managed individually. When a web site needs to be protected with STAR certificates, an ACME <em>Certificate Order</em> is created. This step can be done with a CLI and can of course itself be automated. In the case of STAR, an ACME Order corresponds to a sequence of short-term certificates, perhaps a hundred or more. When creating this initial Order, the requestor needs to generate a private key and include a traditional Certificate Signing Request (<a href="https://en.wikipedia.org/wiki/Certificate_signing_request">CSR</a>).</p>
+
+<p>Each of the certificates included in a STAR Order is valid for a short duration, say 72 hours, and they are issued sequentially. Halfway through the lifetime of each certificate, an agent installed on the web server goes off and fetches the next certificate from a highly available API endpoint on the Certificate Authority, also known as the ACME Server.</p>
+
+<p>Remember that the certificate itself is not secret, so there’s no harm in making it openly available for anyone to pull. Of course, only the owner can make any use of it because only the owner has the corresponding private key.</p>
+
+<p>This somewhat added complexity on the web server’s side pays off with great simplification on the client side: a client that needs to validate a STAR certificate is suddenly back to the good old days: there is no longer any need to query and cache CRLs, and no need for on-line validation with an OCSP server. The results are obvious: better performance, simplified and less error prone code paths, and because of the elimination of the on-line check, higher reliability.</p>
+
+<p>A side effect of this solution is a significantly higher load on the Certificate Transparency (<a href="https://en.wikipedia.org/wiki/Certificate_Transparency">CT</a>) infrastructure, which stores a copy of each publicly issued certificate. We spoke with the CT community and concluded that CT is scalable enough to cope with this extra load.</p>
+
+<p>We just went through the happy path, where the certificate is valid and the client successfully establishes a connection. But what if the server is suspected to have been breached, and the certificate needs to be revoked? One REST call to the ACME server and the Order is cancelled, which means that no further certificates would be issued. As soon as the current certificate expires, the server will not be able to present a valid certificate for the private key it is holding and connection attempts will fail. There’s a bit of a subtlety here: revocation is not immediate, it only takes place when the newest current certificate expires. But in fact, due to caching effects revocation has <em>never</em> been immediate for CRLs and OCSP either. The recommended STAR certificate lifetimes were specified to be similar to the caching time frames for these older technologies.</p>
+
+<h2 id="star-certificates-enable-delegation">STAR Certificates Enable Delegation</h2>
+
+<p>Beyond just simplifying the common use case, STAR certificates enable entirely new use cases. The fact that revocation is easy and effective means that the private key can be handed to a less-than-fully-trusted entity and revoked as necessary. Think of a Content Delivery Network (CDN) which you want to present your web site’s data, but under the provision that this authority can be revoked at any moment. Or think of a large deployment of containers. Each HTTPS endpoint can hold its own private key, associated with a sequence of certificates, and those can be generated automatically and revoked on demand, also automatically.</p>
+
+<p>Moreover, this can be done with no added latency (unlike the <a href="https://github.com/mglt/pylurk">LURK proposal</a>) and without the major pain of client-side migration, which is the case in the <a href="https://datatracker.ietf.org/doc/draft-ietf-tls-subcerts/">delegated credentials proposal</a>, now being advanced by the TLS working group.</p>
+
+<p>We are now working on a follow-on specification of <a href="https://datatracker.ietf.org/doc/draft-ietf-acme-star-delegation/">STAR certificate delegation</a>, and you can follow its progress at the IETF <a href="https://datatracker.ietf.org/wg/acme/about/">ACME working group</a>.</p>
+
+<p>To summarize, support for STAR certificates is a major new PKI capability enabled by the new ACME ecosystem. It comes with important short term benefits and promises longer term benefits that will help deploy TLS securely in ever more use cases.</p>
+
+<hr />
+
+<p>Finally, I would like to thank my co-authors: Diego Lopez, Oscar Gonzalez de Dios, Antonio Agustin Pastor Perales and most of all, Thomas Fossati. Every RFC is a journey, and this one was made truly enjoyable by our partnership.</p>
+
+  </div><a class="u-url" href="/blog/ietf/acme/2020/03/11/ACME.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Yaron&#39;s Blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Yaron&#39;s Blog</li><li><a class="u-email" href="mailto:yaronf.ietf [at] gmail [dot] com">yaronf.ietf [at] gmail [dot] com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/yaronf"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">yaronf</span></a></li><li><a href="https://www.twitter.com/yaronsheffer"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">yaronsheffer</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Turns out, it&#39;s easier to self-host your rarely published blog than to rely on commercial sites and risk them going poof. So here&#39;s me giving it a try.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
