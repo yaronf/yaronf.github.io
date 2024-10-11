@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Identity Pinning: A New Approach to Certificate Validation | Yaron’s Blog</title>
+<meta name="generator" content="Jekyll v4.3.4" />
+<meta property="og:title" content="Identity Pinning: A New Approach to Certificate Validation" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Just Published: RFC 8672 on Server Identity Pinning – a modern, lightweight alternative to certificate pinning" />
+<meta property="og:description" content="Just Published: RFC 8672 on Server Identity Pinning – a modern, lightweight alternative to certificate pinning" />
+<link rel="canonical" href="https://www.sheffer.org/blog/ietf/2019/10/31/ID-Pinning.html" />
+<meta property="og:url" content="https://www.sheffer.org/blog/ietf/2019/10/31/ID-Pinning.html" />
+<meta property="og:site_name" content="Yaron’s Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-10-31T10:00:18+02:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Identity Pinning: A New Approach to Certificate Validation" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2019-10-31T10:00:18+02:00","datePublished":"2019-10-31T10:00:18+02:00","description":"Just Published: RFC 8672 on Server Identity Pinning – a modern, lightweight alternative to certificate pinning","headline":"Identity Pinning: A New Approach to Certificate Validation","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.sheffer.org/blog/ietf/2019/10/31/ID-Pinning.html"},"url":"https://www.sheffer.org/blog/ietf/2019/10/31/ID-Pinning.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blog/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://www.sheffer.org/blog/feed.xml" title="Yaron&apos;s Blog" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/blog/">Yaron&#39;s Blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/blog/about/">About</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Identity Pinning: A New Approach to Certificate Validation</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2019-10-31T10:00:18+02:00" itemprop="datePublished">Oct 31, 2019
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <h2 id="just-published-rfc-8672-on-server-identitypinning---a-modern-lightweight-alternative-to-certificate-pinning">Just Published: RFC 8672 on Server Identity Pinning  – a modern, lightweight alternative to certificate pinning</h2>
+
+<p>The RFC Editor just published <a href="https://www.rfc-editor.org/rfc/rfc8672.html">RFC 8672</a>, a specification that can potentially make TLS deployments much more secure by virtually eliminating the risk of forged public-key certificates.</p>
+
+<p>For many years we have been seeing <a href="https://threatpost.com/final-report-diginotar-hack-shows-total-compromise-ca-servers-103112/77170/">attacks</a> on certificate authorities (CAs). All CAs are essentially created equal, and if a rogue CA issues a certificate for <em>example.com</em> and hands it to a malicious server, there’s nothing to stop clients from connecting to the server and trusting its identity. The same is true for servers located behind enterprise firewalls. A rogue CA could just as well issue a fake certificate for <em>finance-dept.example.com</em>, regardless of whether it can access the server or not.</p>
+
+<p>An often used approach within enterprise networks is <em>certificate pinning</em>. Normally we trust a server certificate because it is the last component of a certificate chain: a chain that starts with CAs that are widely known, and are configured into the TLS client (the browser, typically), contains one or two lesser “intermediate” CAs, and ends with the server certificate. Each of these chained certificates is digitally signed by the one above it.</p>
+
+<p><img src="/assets/pinning-pins.jpg" alt="pins-1358849_800.jpg" />
+<em>Photo: Brett Hondow, Pixabay</em></p>
+
+<p>Certificate pinning, the solution that we are replacing, forgoes the certificate chain in favor of direct trust in the server’s certificate, which is stored in the client’s certificate store. Unfortunately, certificate pinning is a management nightmare: every time the server’s certificate is reissued – typically once a year – all clients need to be updated with the new certificate. A variant of this approach is to pin the CA, instead of the server certificate, by having all clients remember that the certificate for <em>example.com</em> must only be issued by <em>my-favorite-ca.com</em>. This works quite well… until the company decides to migrate to <em>cheaper-ca.com</em>. Then, all clients need to be updated with the new CA, a major pain. For this reason and others, <a href="https://tools.ietf.org/html/rfc7469">internet standards</a> for certificate pinning <a href="https://blog.qualys.com/ssllabs/2016/09/06/is-http-public-key-pinning-dead">have not seen</a> wide deployment.</p>
+
+<p>In an attempt to simplify this solution, we came up with the identity pinning notion, based on the <a href="https://en.wikipedia.org/wiki/Trust_on_first_use">Trust-on-First-Use (TOFU)</a> principle:</p>
+
+<p>The first time a client connects to a server, they both compute a secret value based on the TLS handshake. The server sends back to the client an opaque (encrypted) ticket that contains this secret. The client that already computed the secret independently, stores the ticket along with the secret for future use. Note the trust-on-first-use element here: the server authenticates itself the good old fashioned way, using only its certificate.</p>
+
+<p><img src="/assets/pinning-seq1.png" alt="Pinning_ Initial Connection.png" />
+<em>Initial Connection</em></p>
+
+<p>On any subsequent connection, the client sends the ticket to the server. Only the genuine server is able to decrypt the ticket, obtain the secret and send back a proof that indeed, it knows the secret. The client now verifies the proof. If the proof is correct, the TLS handshake completes successfully and the connection is established. Otherwise, <em>poof</em>  –  the TLS handshake is aborted.
+<img src="/assets/pinning-seq2.png" alt="Pinning_ Subsequent Connection.png" />
+<em>Subsequent Connection (Simplified)</em></p>
+
+<p>What we have gained is <em>second-factor authentication for the server</em>. The TLS server not only needs to present a valid certificate, as usual, it also needs to prove that it possesses the secret that’s needed to decrypt the ticket, proving its legitimacy.</p>
+
+<p>This all happens automatically with no need to configure anything, either on the client or the server side. It is also independent of the server’s certificate (hence <em>identity pinning</em>), which eliminates the complexity inherent in certificate pinning solutions. </p>
+
+<p>You may want to <a href="https://www.rfc-editor.org/rfc/rfc8672.html">read the RFC</a> for the lowdown on this protocol. We learned from other people’s experience, and the protocol has quite a few <strong>features</strong> that make it attractive for real-life use:</p>
+
+<ul>
+  <li><strong>Generality</strong>: identity pinning works at the TLS level, with no dependence on HTTP or assumptions on traffic. It can be applied to web traffic on the internet and within the enterprise, to REST APIs, and to non-HTTP protocols. </li>
+  <li><strong>Zero management</strong>: nothing needs to be configured on the client side. On the server side there is only one simple parameter: the ticket lifetime (normally between 7 and 31 days).</li>
+  <li><strong>Robustness</strong>: the protocol is not effected by certificate renewal, CA change or even certificate revocation, and can accommodate single servers and server clusters alike.</li>
+  <li><strong>Very low overhead</strong>: the ticket and additional TLS messages are very small. The client maintains a “pin store” that holds a few dozen bytes for each server it has seen in the last month.</li>
+  <li><strong>Up to date</strong>: the protocol is defined for TLS 1.3 which, in late 2019, is quite new but already widely deployed.</li>
+</ul>
+
+<p><img src="/assets/pinning-tls13.png" alt="tls13.png" /></p>
+
+<ul>
+  <li><strong>Privacy</strong>: servers are required to regenerate a new ticket on each connection, so that tickets cannot be used by an eavesdropper to link different sessions by the same client.</li>
+  <li><strong>Deployment flexibility</strong>: the protocol includes a “ramp down” mode, in case a server owner decides to disable the use of this mechanism.</li>
+  <li><strong>Best fit to enterprise networks</strong>: whereas servers on the open internet can benefit from <a href="https://www.certificate-transparency.org/">Certificate Transparency</a>, servers located “behind the firewall” typically do not have their certificates stored in the CT infrastructure. Identity Pinning is a simple way to harden such servers’ secure connectivity.</li>
+</ul>
+
+<p>We have <a href="https://github.com/yaronf/mint">implemented</a> the Identity Pinning protocol but due to the slow pace of standardization, the implementation is somewhat outdated by now. If you plan to implement the protocol, feel free to reach out to <a href="mailto:draft-sheffer-tls-pinning-ticket@ietf.org">the authors (Daniel Migault and myself)</a> with any questions.</p>
+
+  </div><a class="u-url" href="/blog/ietf/2019/10/31/ID-Pinning.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Yaron&#39;s Blog</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Yaron&#39;s Blog</li><li><a class="u-email" href="mailto:yaronf.ietf [at] gmail [dot] com">yaronf.ietf [at] gmail [dot] com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/yaronf"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg> <span class="username">yaronf</span></a></li><li><a href="https://www.twitter.com/yaronsheffer"><svg class="svg-icon"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">yaronsheffer</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Turns out, it&#39;s easier to self-host your rarely published blog than to rely on commercial sites and risk them going poof. So here&#39;s me giving it a try.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
