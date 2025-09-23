@@ -20,6 +20,8 @@ end
 
 # YS - added
 gem "jekyll-remote-theme"
+# Add to fix rexml security vuln
+gem "rexml", ">= 3.4.2", "< 4.0"
 
 # Windows and JRuby does not include zoneinfo files, so bundle the tzinfo-data gem
 # and associated library.
