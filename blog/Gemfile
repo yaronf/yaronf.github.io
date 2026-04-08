@@ -22,6 +22,8 @@ end
 gem "jekyll-remote-theme"
 # Add to fix rexml security vuln
 gem "rexml", ">= 3.4.2", "< 4.0"
+# CVE-2026-35611 / GHSA-h27x-rffw-24p4: ReDoS in Addressable::Template#match (2.9.0 completes fix after 2.8.10)
+gem "addressable", ">= 2.9.0"
 
 # Windows and JRuby does not include zoneinfo files, so bundle the tzinfo-data gem
 # and associated library.
